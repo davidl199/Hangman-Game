@@ -1,18 +1,11 @@
 $(document).ready(function () {
 
 
-    /* alert("testing js"); */
-    /* var txt = document.getElementById("test");
-
-    document.onkeyup = function(event) {
-        txt.textContent = event.key;
-      }; */
-
-    /* var guessLetter = ""; */
-
-    var randomWordArray = ["javascript", "csharp"];
+    var randomWordArray = ["java", "ruby", "swift", "python", "php", "mysql", "javascript", "csharp"];
+    //var randomWordArray = ["java","php"];
 
     var randomWord = randomWordArray[Math.floor(Math.random() * randomWordArray.length)];
+    randomWord = randomWord.toUpperCase();
 
     var blankString = "";
     var answerArr = [];
@@ -22,21 +15,27 @@ $(document).ready(function () {
     var results = "";
 
     document.onkeyup = function (event) {
-    
+
         var guessLetter = event.key;
 
         if (guessCount == 12) {
-            results = "";
-            $('#results').text(results);
+            //results = "";
+            // $('#results').text(results);
+            $('#results').empty();
         }
 
         if (guessCount != 0) {
 
             MatchLetters(guessLetter);
-            if(randomWord === answerArr.join('')) {
+            if (randomWord === answerArr.join('')) {
                 wins++;
                 $('#wins').text(wins);
-                $('#results').text('You won!');
+                // $('#results').text('You won!');
+                var newElement = $('<img>');
+                $('#results').append(newElement);
+                //newElement.attr('src','assets/images/java.png')
+                var imgSource = "assets/images/" + randomWord.toLowerCase() + ".png";
+                newElement.attr('src', imgSource);
                 Reset();
             }
         }
@@ -60,13 +59,20 @@ $(document).ready(function () {
     Initialize();
 
     function UpdateLettersGuessed(wrongLetter) {
-        if (wrongLettersArr.indexOf(wrongLetter) === -1) {
-            wrongLettersArr.push(wrongLetter);
+        if (wrongLettersArr.indexOf(wrongLetter.toUpperCase()) === -1) {
+            wrongLettersArr.push(wrongLetter.toUpperCase());
+            guessCount--;
         }
+        /* if(wrongLetter === "Shift") {
+        }
+        else if (wrongLettersArr.indexOf(wrongLetter.toUpperCase()) === -1) {
+            wrongLettersArr.push(wrongLetter.toUpperCase());
+        } */
     }
 
     function Reset() {
         randomWord = randomWordArray[Math.floor(Math.random() * randomWordArray.length)];
+        randomWord = randomWord.toUpperCase();
         blankString = "";
         answerArr = [];
         wrongLettersArr = [];
@@ -78,22 +84,29 @@ $(document).ready(function () {
         var letterFound = false;
         for (var i = 0; i < randomWord.length; i++) {
 
-            if (randomWord[i] === letter) {
-                answerArr[i] = letter;
+            if (randomWord[i] === letter.toUpperCase()) {
+                answerArr[i] = letter.toUpperCase();
                 letterFound = true;
             }
         }
 
         if (letterFound == false) {
             UpdateLettersGuessed(letter);
-            guessCount--;
             $('#guesscount').text(guessCount);
             $('#lettersGuessed').text(wrongLettersArr.join(" "));
+            /* if(wrongLetter === "Shift") {
+            }
+            else{
+                guessCount--;
+                
+                $('#guesscount').text(guessCount);
+                $('#lettersGuessed').text(wrongLettersArr.join(" "));
+            } */
+
         }
 
-
         if (guessCount == 0) {
-            if(wins != 0) {
+            if (wins != 0) {
                 wins--;
             }
             results = "You Guessed to Many Letters! Guess a new word"
@@ -107,9 +120,5 @@ $(document).ready(function () {
             $('#answer').text(answerArr.join(" "));
         }
 
-
-        /* $('#results').text(results); */
-        /* alert(randomWord); */
-        /* alert(answerArray.join("")); */
     }
 });

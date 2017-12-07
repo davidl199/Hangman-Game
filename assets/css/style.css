@@ -1,15 +1,29 @@
+
+body {
+    background-color: #1b1b1b;
+}
 .col-lg-4, .col-lg-8 {
-    background-color: #e3e3e3;
-    border: 1px solid grey;
-    padding: 20px;
-    height: 700px;
+    /* background-color: #2b2a2a; */
+    background-color: #242323;
+    border: 1px solid rgb(83, 83, 83);
+    padding: 10px;
+    height: 450px;
+    color: rgb(145, 145, 189);
 }
 
 
 .row {
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 h3, h4, p {
-    padding-bottom: 30px;
+    padding-bottom: 10px;
+}
+
+#title {
+    text-align: center;
+}
+
+#binary {
+    padding-top: 20px;
 }
